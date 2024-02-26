@@ -64,19 +64,39 @@ public class MovieCollection {
     }
 
     public void searchTitles() {
-        String term = "";
+        String term;
         System.out.print("Enter a title search term: ");
         term = scan.nextLine();
-        for (int i = 0; i < movies.size(); i++) {
-            if (movies.get(i).getTitle().contains(term)) {
-                titles.add(movies.get(i).getTitle());
+        for (Movie movie : movies) {
+            if (movie.getTitle().toLowerCase().contains(term.toLowerCase()) || movie.getTitle().toUpperCase().contains(term.toUpperCase())) {
+                titles.add(movie.getTitle());
             }
         }
-        sort(titles);
+        if (titles.isEmpty()) {
+            System.out.println();
+            System.out.println("No movie titles match that search term!");
+        } else {
+            sort(titles);
+            for (int i = 0; i < titles.size(); i++) {
+                System.out.println((i + 1) + ". " + titles.get(i));
+            }
+            System.out.println("Which movie would you like to learn more about?");
+            System.out.print("Enter number: ");
+            int num = scan.nextInt();
+            scan.nextLine();
+            System.out.println();
+        }
     }
 
     public void sort(ArrayList<String> titles) {
-
+        for (int i = 1; i < titles.size(); i++) {
+            while (i != 0 && titles.get(i).compareTo(titles.get(i - 1)) < 0) {
+                String temp = titles.get(i);
+                titles.set(i, titles.get(i - 1));
+                titles.set(i - 1, temp);
+                i--;
+            }
+        }
     }
 
     public void searchCast() {
