@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class MovieCollection {
@@ -50,14 +49,11 @@ public class MovieCollection {
             System.out.print("Enter choice: ");
             menuOption = scan.nextLine();
 
-            if (menuOption.equals("t")) {
-                searchTitles();
-            } else if (menuOption.equals("c")) {
-                searchCast();
-            } else if (menuOption.equals("q")) {
-                System.out.println("Goodbye!");
-            } else {
-                System.out.println("Invalid choice!");
+            switch (menuOption) {
+                case "t" -> searchTitles();
+                case "c" -> searchCast();
+                case "q" -> System.out.println("Goodbye!");
+                default -> System.out.println("Invalid choice!");
             }
         }
     }
@@ -68,8 +64,8 @@ public class MovieCollection {
         System.out.print("Enter a title search term: ");
         term = scan.nextLine();
         for (Movie movie : movies) {
-            if (movie.getTitle().toLowerCase().contains(term.toLowerCase()) || movie.getTitle().toUpperCase().contains(term.toUpperCase())) {
-                titles.add(movie.getTitle());
+            if (movie.title().toLowerCase().contains(term.toLowerCase()) || movie.title().toUpperCase().contains(term.toUpperCase())) {
+                titles.add(movie.title());
             }
         }
         if (titles.isEmpty()) {
@@ -84,10 +80,8 @@ public class MovieCollection {
             System.out.print("Enter number: ");
             int num = scan.nextInt();
             scan.nextLine();
-            System.out.println();
-            System.out.println(titles.get(num - 1));
             for (Movie movie : movies) {
-                if (movie.getTitle().equals(titles.get(num - 1))) {
+                if (movie.title().equals(titles.get(num - 1))) {
                     System.out.println(movie.getInfo());
                 }
             }
@@ -111,7 +105,7 @@ public class MovieCollection {
         System.out.print("Enter a person to search for (first and last name): ");
         term = scan.nextLine();
         for (Movie movie : movies) {
-            String str = movie.getCast();
+            String str = movie.cast();
             String[] array = str.split("\\|");
             for (String member : array) {
                 if ((member.toLowerCase().contains(term.toLowerCase()) || member.toUpperCase().contains(term.toUpperCase())) && !cast.contains(member)) {
@@ -133,8 +127,8 @@ public class MovieCollection {
             scan.nextLine();
             ArrayList<String> list = new ArrayList<>();
             for (Movie movie : movies) {
-                if (movie.getCast().contains(cast.get(num - 1))) {
-                    list.add(movie.getTitle());
+                if (movie.cast().contains(cast.get(num - 1))) {
+                    list.add(movie.title());
                 }
             }
             sort(list);
@@ -145,9 +139,8 @@ public class MovieCollection {
             System.out.print("Enter number: ");
             int number = scan.nextInt();
             scan.nextLine();
-            System.out.println();
             for (Movie movie : movies) {
-                if (movie.getTitle().equals(list.get(number - 1))) {
+                if (movie.title().equals(list.get(number - 1))) {
                     System.out.println(movie.getInfo());
                 }
             }
